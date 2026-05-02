@@ -1,0 +1,66 @@
+/* ===================================
+   Drawer Tags Extension Styles
+   =================================== */
+
+/* ALWAYS hide drawer-only items */
+li.drawer-only-li {
+  display: none !important;
+}
+
+/* ONLY show when drawer is open (mobile hamburger) */
+.App.drawerOpen li.drawer-only-li {
+  display: block !important;
+}
+
+/* ===================================
+   Tag icon color — use tag's own color 
+   on the font-awesome icon only
+   =================================== */
+.App.drawerOpen .drawer-tag-btn .Button-icon {
+  color: var(--tag-color) !important;
+}
+
+/* ===================================
+   Mobile: Logo centered in header
+   Replace "All Discussions" dropdown
+   =================================== */
+@media (max-width: 768px) {
+
+  /* Style the title control and scrubber areas as transparent logo holders */
+  .App-titleControl, .PostStreamScrubber {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    color: transparent !important;
+    font-size: 0 !important;
+  }
+
+  /* Hide the dropdown content and any internal elements (in case they still exist) */
+  .App-titleControl *, .PostStreamScrubber * {
+    display: none !important;
+  }
+
+  /* Show our custom logo instead */
+  .App-titleControl::before, .PostStreamScrubber::before {
+    content: "";
+    display: block;
+    position: fixed;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: 130px;
+    height: 34px;
+    background-image: url("https://getneotiler.com/social/assets/logo-zohuavye.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "name": "@neotiler/flarum-drawer-tags",
+  "devDependencies": {
+    "flarum-webpack-config": "^2.0.0",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
+  },
+  "scripts": {
+    "dev": "webpack --mode development --watch",
+    "build": "webpack --mode production"
+  },
+  "flarum-extension": {
+    "forum": "src/forum/index.js"
+  }
+}

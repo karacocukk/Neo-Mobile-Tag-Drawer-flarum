@@ -1,0 +1,4 @@
+/js/node_modules
+/js/dist/*.map
+.DS_Store
+.gemini
