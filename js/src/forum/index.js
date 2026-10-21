@@ -1,11 +1,12 @@
 import app from 'flarum/forum/app';
 import { extend } from 'flarum/common/extend';
 import HeaderSecondary from 'flarum/forum/components/HeaderSecondary';
+import IndexPage from 'flarum/forum/components/IndexPage';
 import LinkButton from 'flarum/common/components/LinkButton';
 import Separator from 'flarum/common/components/Separator';
 
 app.initializers.add('neotiler/flarum-drawer-tags', () => {
-  
+  // 1. Mobile Drawer Tags
   extend(HeaderSecondary.prototype, 'items', function (items) {
     try {
       const tags = app.store.all('tags');
@@ -13,7 +14,7 @@ app.initializers.add('neotiler/flarum-drawer-tags', () => {
       if (!tags || tags.length === 0) return;
 
       const sortedTags = tags
-        .filter(tag => tag.position() !== null && !tag.isChild())
+        .filter((tag) => tag.position() !== null && !tag.isChild())
         .sort((a, b) => a.position() - b.position());
 
       // "All Discussions" — same style as native items
@@ -62,8 +63,45 @@ app.initializers.add('neotiler/flarum-drawer-tags', () => {
     }
   });
 
+  // 2. Stack Overflow Style Sort Tabs (Replacing standard dropdown)
+  extend(IndexPage.prototype, 'viewItems', function (items) {
+    try {
+      if (!items || typeof items.has !== 'function' || !items.has('sort')) return;
+
+      const sortMap = app.discussions ? app.discussions.sortMap() : {};
+      if (!sortMap || Object.keys(sortMap).length === 0) return;
+
+      const currentSort = (app.search && app.search.params && app.search.params().sort) || Object.keys(sortMap)[0];
+
+      const sortGroup = (
+        <div className="so-sort-container">
+          <div className="so-sort-group" role="group" aria-label="Sort discussions">
+            {Object.keys(sortMap).map((key) => {
+              const label = app.translator.trans(`core.forum.index_sort.${key}_button`);
+              const isActive = currentSort === key;
+
+              return (
+                <button
+                  type="button"
+                  className={`so-sort-btn ${isActive ? 'is-active' : ''}`}
+                  onclick={() => app.search.changeSort(key)}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      );
+
+      items.setContent('sort', sortGroup);
+    } catch (e) {
+      console.warn('[drawer-tags] Could not render sort tabs:', e);
+    }
+  });
+
   // Make the mobile logo clickable to return to home
-  document.addEventListener('click', function(e) {
+  document.addEventListener('click', function (e) {
     if (window.innerWidth <= 768 && e.target.closest('.App-titleControl')) {
       e.preventDefault();
       m.route.set(app.route('index'));
