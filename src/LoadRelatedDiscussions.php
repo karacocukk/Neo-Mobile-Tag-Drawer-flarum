@@ -146,7 +146,7 @@ class LoadRelatedDiscussions
             $tagRows = $this->db->table('discussion_tag as dt')
                 ->join('tags as t', 't.id', '=', 'dt.tag_id')
                 ->whereIn('dt.discussion_id', $finalIds)
-                ->orderByRaw('CASE WHEN t.parent_id IS NOT NULL THEN 0 ELSE 1 END')
+                ->orderByRaw('CASE WHEN t.parent_id IS NULL THEN 0 ELSE 1 END')
                 ->orderBy('t.position')
                 ->get(['dt.discussion_id', 't.name', 't.slug', 't.color', 't.icon', 't.parent_id']);
 

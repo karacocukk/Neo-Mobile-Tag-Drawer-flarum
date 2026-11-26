@@ -3,6 +3,21 @@ import Component from 'flarum/common/Component';
 import Link from 'flarum/common/components/Link';
 import icon from 'flarum/common/helpers/icon';
 
+function getContrastTextColor(hex) {
+  if (!hex || typeof hex !== 'string') return '#ffffff';
+  const clean = hex.replace('#', '').trim();
+  const full = clean.length === 3
+    ? clean.split('').map((c) => c + c).join('')
+    : clean;
+  if (full.length !== 6) return '#ffffff';
+  const r = parseInt(full.slice(0, 2), 16);
+  const g = parseInt(full.slice(2, 4), 16);
+  const b = parseInt(full.slice(4, 6), 16);
+  if (Number.isNaN(r) || Number.isNaN(g) || Number.isNaN(b)) return '#ffffff';
+  const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+  return yiq >= 165 ? '#111827' : '#ffffff';
+}
+
 export default class RelatedDiscussions extends Component {
   view() {
     const discussion = this.attrs.discussion;
@@ -56,16 +71,29 @@ export default class RelatedDiscussions extends Component {
                   <div className="NeoRelatedDiscussions-main">
                     <div className="NeoRelatedDiscussions-title">{item.title}</div>
                     <div className="NeoRelatedDiscussions-meta">
-                      {tags.map((tag) => (
-                        <span
-                          className="NeoRelatedDiscussions-tag"
-                          key={tag.slug}
-                          style={tag.color ? { '--neo-tag-color': tag.color } : {}}
-                        >
-                          {tag.icon ? icon(tag.icon, { className: 'NeoRelatedDiscussions-tagIcon' }) : null}
-                          <span>{tag.name}</span>
+                      {tags.length > 0 && (
+                        <span className="NeoRelatedDiscussions-tags">
+                          {tags.map((tag) => {
+                            const hasColor = Boolean(tag.color);
+                            const tagStyle = hasColor
+                              ? {
+                                  backgroundColor: tag.color,
+                                  color: getContrastTextColor(tag.color),
+                                }
+                              : {};
+                            return (
+                              <span
+                                className={`NeoRelatedDiscussions-tag ${hasColor ? 'is-colored' : ''}`}
+                                key={tag.slug}
+                                style={tagStyle}
+                              >
+                                {tag.icon ? icon(tag.icon, { className: 'NeoRelatedDiscussions-tagIcon' }) : null}
+                                <span>{tag.name}</span>
+                              </span>
+                            );
+                          })}
                         </span>
-                      ))}
+                      )}
                       {relTime && <span className="NeoRelatedDiscussions-time">{relTime}</span>}
                     </div>
                   </div>
