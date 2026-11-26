@@ -7,23 +7,6 @@ import LinkButton from 'flarum/common/components/LinkButton';
 import Separator from 'flarum/common/components/Separator';
 import RelatedDiscussions from './components/RelatedDiscussions';
 
-function renderNeoTilerIcon() {
-  return (
-    <svg
-      aria-hidden="true"
-      className="icon Button-icon neo-tiler-svg"
-      viewBox="0 0 16 16"
-      width="15"
-      height="15"
-      fill="currentColor"
-    >
-      <rect x="1" y="1.5" width="6.5" height="13" rx="1.6" />
-      <rect x="9" y="1.5" width="6" height="5.75" rx="1.6" />
-      <rect x="9" y="8.75" width="6" height="5.75" rx="1.6" />
-    </svg>
-  );
-}
-
 app.initializers.add('neotiler/flarum-drawer-tags', () => {
   // 1. Mobile Drawer Tags
   extend(HeaderSecondary.prototype, 'items', function (items) {
@@ -57,7 +40,7 @@ app.initializers.add('neotiler/flarum-drawer-tags', () => {
           href="https://getneotiler.com"
           className="Button Button--link hasIcon neo-ecosystem-link"
         >
-          {renderNeoTilerIcon()}
+          <i aria-hidden="true" className="icon fas fa-th-large fa-fw Button-icon" />
           <span className="Button-label">NeoTiler for Mac</span>
         </a>,
         28.6
@@ -137,14 +120,22 @@ app.initializers.add('neotiler/flarum-drawer-tags', () => {
     }
   });
 
-  // 1c. Desktop & Tablet Left Sidebar: "NeoTiler for Mac" and "Blog" right under "Tags"
+  // 1c. Desktop & Tablet Left Sidebar: swap Tags icon to bookmark & add "NeoTiler for Mac" (th-large) + "Blog" right under "Tags"
   extend(IndexPage.prototype, 'navItems', function (items) {
     try {
       if (!items || typeof items.add !== 'function') return;
 
       let basePriority = -10;
-      if (items.items && items.items.tags && typeof items.items.tags.priority === 'number') {
-        basePriority = items.items.tags.priority;
+      if (items.has('tags')) {
+        if (items.items && items.items.tags && typeof items.items.tags.priority === 'number') {
+          basePriority = items.items.tags.priority;
+        }
+        items.setContent(
+          'tags',
+          <LinkButton icon="fas fa-bookmark" href={app.route('tags')}>
+            {app.translator.trans('flarum-tags.forum.index.tags_link')}
+          </LinkButton>
+        );
       }
 
       items.add(
@@ -154,7 +145,7 @@ app.initializers.add('neotiler/flarum-drawer-tags', () => {
           className="Button hasIcon neo-sidebar-link"
           onclick={(e) => e.currentTarget.blur()}
         >
-          {renderNeoTilerIcon()}
+          <i aria-hidden="true" className="icon fas fa-th-large Button-icon" />
           <span className="Button-label">NeoTiler for Mac</span>
         </a>,
         basePriority - 0.4
