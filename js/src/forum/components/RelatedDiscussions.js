@@ -32,7 +32,11 @@ export default class RelatedDiscussions extends Component {
       const currentTags = typeof discussion.tags === 'function' ? discussion.tags() : [];
       if (Array.isArray(currentTags) && currentTags.length > 0) {
         const child = currentTags.find((t) => t && typeof t.isChild === 'function' && t.isChild());
-        browseTag = child || currentTags[0];
+        const topicalPrimary = currentTags.find((t) => {
+          const s = t && typeof t.slug === 'function' ? t.slug() : '';
+          return s && s !== 'announcements' && s !== 'general';
+        });
+        browseTag = child || topicalPrimary || currentTags[0];
       }
     } catch (e) {
       browseTag = null;

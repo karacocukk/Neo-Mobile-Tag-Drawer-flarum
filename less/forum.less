@@ -431,7 +431,8 @@ li.drawer-only-li {
   }
 }
 
-/* Hide redundant "stickied/unstickied the discussion" event posts (pin badge is already shown in DiscussionHero) */
-.PostStream-item[data-type="discussionStickied"] {
+/* Hide redundant sticky / tag timeline event posts (badges are already shown in DiscussionHero) */
+.PostStream-item[data-type="discussionStickied"],
+.PostStream-item[data-type="discussionTagged"] {
   display: none !important;
 }

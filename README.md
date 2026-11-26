@@ -23,9 +23,10 @@ A lightweight, production-hardened Flarum extension (`neotiler/flarum-drawer-tag
 
 ### 2. Related Discussions (SPA + Crawler SSR)
 - **Zero-Overhead API Loading:** Hooked exclusively into `ShowDiscussionController` via `Extend\ApiController::prepareDataForSerialization` (`src/LoadRelatedDiscussions.php`). Index/list endpoints (`ListDiscussionsController`) incur zero extra queries or payload size.
-- **Weighted Tag Relevance:** Scores visible, public, non-`noindex` discussions:
-  - `+10` points per shared **child tag**
-  - `+4` points per shared **primary tag**
+- **Weighted Tag & Entity Relevance:** Scores visible, public, non-`noindex` discussions:
+  - `+12` points per shared **child tag** (`AI Focus`, `macOS & Swift Dev`, etc.)
+  - `+6` points per shared **topical primary tag** (`Hardware`, `Support & Feedback`, `Games`, etc.; `+3` for broad `Dev Talk`, `+1` tie-breaker for `Announcements` / `General`)
+  - Up to `+12` bonus points (`+3` per shared title entity token) for tight topical clustering with zero extra queries on index endpoints
   - Tie-breakers: `last_posted_at DESC`, then `comment_count DESC`
   - Returns up to **5** related discussions with an automatic fallback to the freshest visible public discussions when a tag has fewer matches.
 - **Native-Looking SPA Component:** Mounted on `DiscussionPage.prototype.pageContent` (outside `PostStream`, keeping `ReplyPlaceholder` scroll math and `PostStreamScrubber` untouched). Includes vibrant solid tag badges with automatic YIQ contrast text, reply counts, relative timestamps, a **"More in \<Tag\> →"** link, and full Light / `fof/nightmode` Dark support.
