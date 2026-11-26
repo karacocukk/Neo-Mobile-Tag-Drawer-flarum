@@ -2,8 +2,10 @@ import app from 'flarum/forum/app';
 import { extend } from 'flarum/common/extend';
 import HeaderSecondary from 'flarum/forum/components/HeaderSecondary';
 import IndexPage from 'flarum/forum/components/IndexPage';
+import DiscussionPage from 'flarum/forum/components/DiscussionPage';
 import LinkButton from 'flarum/common/components/LinkButton';
 import Separator from 'flarum/common/components/Separator';
+import RelatedDiscussions from './components/RelatedDiscussions';
 
 app.initializers.add('neotiler/flarum-drawer-tags', () => {
   // 1. Mobile Drawer Tags
@@ -63,6 +65,30 @@ app.initializers.add('neotiler/flarum-drawer-tags', () => {
     }
   });
 
+  // 1b. Private Messages envelope button in secondary header (for fof/byobu)
+  extend(HeaderSecondary.prototype, 'items', function (items) {
+    try {
+      if (!app.session || !app.session.user) return;
+      if (!app.routes || !app.routes.byobuPrivate) return;
+
+      items.add(
+        'privateMessages',
+        <LinkButton
+          icon="fas fa-envelope"
+          href={app.route('byobuPrivate')}
+          className="Button Button--flat Header-messagesBtn"
+          title="Messages"
+          aria-label="Messages"
+        >
+          <span className="Header-messagesLabel">Messages</span>
+        </LinkButton>,
+        12
+      );
+    } catch (e) {
+      console.warn('[drawer-tags] Could not render messages icon:', e);
+    }
+  });
+
   // 2. Stack Overflow Style Sort Tabs (Replacing standard dropdown)
   extend(IndexPage.prototype, 'viewItems', function (items) {
     try {
@@ -71,7 +97,8 @@ app.initializers.add('neotiler/flarum-drawer-tags', () => {
       const sortMap = app.discussions ? app.discussions.sortMap() : {};
       if (!sortMap || Object.keys(sortMap).length === 0) return;
 
-      const currentSort = (app.search && app.search.params && app.search.params().sort) || Object.keys(sortMap)[0];
+      const currentSort =
+        (app.search && app.search.params && app.search.params().sort) || Object.keys(sortMap)[0];
 
       const sortGroup = (
         <div className="so-sort-container">
@@ -97,6 +124,28 @@ app.initializers.add('neotiler/flarum-drawer-tags', () => {
       items.setContent('sort', sortGroup);
     } catch (e) {
       console.warn('[drawer-tags] Could not render sort tabs:', e);
+    }
+  });
+
+  // 3. Related Discussions section below the discussion main container
+  // Mounted on DiscussionPage.pageContent (outside PostStream) so ReplyPlaceholder
+  // scroll calculations and PostStreamScrubber positioning remain 100% untouched.
+  extend(DiscussionPage.prototype, 'pageContent', function (items) {
+    try {
+      if (!this.discussion) return;
+
+      const related = this.discussion.attribute('relatedDiscussions');
+      if (!Array.isArray(related) || related.length === 0) return;
+
+      items.add(
+        'relatedDiscussions',
+        <div className="container NeoRelatedDiscussions-container">
+          <RelatedDiscussions discussion={this.discussion} />
+        </div>,
+        5
+      );
+    } catch (e) {
+      console.warn('[drawer-tags] Could not render related discussions:', e);
     }
   });
 

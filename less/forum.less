@@ -220,3 +220,202 @@ li.drawer-only-li {
     background-position: center;
   }
 }
+
+/* Header Messages envelope icon next to notifications bell */
+@media (min-width: 769px) {
+  .Header-secondary .Header-messagesBtn {
+    padding: 8px 10px;
+  }
+  .Header-secondary .Header-messagesBtn .Button-icon {
+    margin-right: 0;
+    font-size: 16px;
+  }
+  .Header-secondary .Header-messagesBtn .Header-messagesLabel {
+    display: none;
+  }
+}
+
+/* ===================================
+   Related Discussions Block (Bottom of DiscussionPage)
+   =================================== */
+
+.NeoRelatedDiscussions-container {
+  padding-top: 8px;
+  padding-bottom: 52px;
+}
+
+.NeoRelatedDiscussions {
+  margin-top: 8px;
+  padding-top: 26px;
+  border-top: 1px solid var(--control-bg);
+}
+
+/* Align with the DiscussionPage-stream column on tablet/desktop */
+@media (min-width: 768px) {
+  .DiscussionPage-discussion > .NeoRelatedDiscussions-container {
+    display: grid;
+    grid-gap: 75px;
+    grid-template-columns: 1fr 150px;
+    grid-template-areas: 'related spacer';
+
+    &::before, &::after {
+      content: none;
+    }
+
+    > .NeoRelatedDiscussions {
+      grid-area: related;
+      min-width: 0;
+    }
+  }
+}
+
+.NeoRelatedDiscussions-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.NeoRelatedDiscussions-heading {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--heading-color);
+}
+
+.NeoRelatedDiscussions-headingIcon {
+  color: var(--primary-color);
+  font-size: 14px;
+}
+
+.NeoRelatedDiscussions-moreLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted-color);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: var(--primary-color);
+    text-decoration: none;
+  }
+
+  .icon {
+    font-size: 11px;
+  }
+}
+
+.NeoRelatedDiscussions-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.NeoRelatedDiscussions-item {
+  margin: 0;
+  padding: 0;
+}
+
+.NeoRelatedDiscussions-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 16px;
+  border-radius: 10px;
+  background: var(--control-bg);
+  border: 1px solid transparent;
+  text-decoration: none !important;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.12s ease;
+
+  &:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-1px);
+
+    .NeoRelatedDiscussions-title {
+      color: var(--primary-color);
+    }
+  }
+}
+
+.NeoRelatedDiscussions-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.NeoRelatedDiscussions-title {
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.38;
+  color: var(--heading-color);
+  margin-bottom: 6px;
+  transition: color 0.15s ease;
+  word-break: break-word;
+}
+
+.NeoRelatedDiscussions-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted-color);
+}
+
+.NeoRelatedDiscussions-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--neo-tag-color, var(--primary-color));
+  background: rgba(74, 144, 217, 0.12);
+}
+
+.NeoRelatedDiscussions-tagIcon {
+  font-size: 10.5px;
+}
+
+.NeoRelatedDiscussions-time {
+  color: var(--muted-color);
+  font-size: 12px;
+}
+
+.NeoRelatedDiscussions-stats {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted-color);
+  background: var(--body-bg);
+}
+
+@media (max-width: 767px) {
+  .NeoRelatedDiscussions-link {
+    padding: 12px 13px;
+    gap: 10px;
+  }
+
+  .NeoRelatedDiscussions-title {
+    font-size: 14px;
+  }
+}
