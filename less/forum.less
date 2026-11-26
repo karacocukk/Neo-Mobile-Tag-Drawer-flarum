@@ -448,6 +448,26 @@ li.item-drawerNeoTilerBlog {
   vertical-align: -0.18em;
 }
 
+/* Prevent stuck grey :focus box when returning via browser Back (bfcache) */
+.sideNav .Dropdown-menu > li > a.neo-sidebar-link,
+a.neo-sidebar-link,
+a.neo-ecosystem-link {
+  &:focus,
+  &:active,
+  &:hover {
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: none !important;
+  }
+
+  &:hover {
+    color: var(--primary-color);
+  }
+}
+
 /* ===================================
    SSR Minimal Ecosystem Footer (Zero CLS)
    =================================== */

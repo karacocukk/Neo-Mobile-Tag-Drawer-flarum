@@ -152,6 +152,7 @@ app.initializers.add('neotiler/flarum-drawer-tags', () => {
         <a
           href="https://getneotiler.com"
           className="Button hasIcon neo-sidebar-link"
+          onclick={(e) => e.currentTarget.blur()}
         >
           {renderNeoTilerIcon()}
           <span className="Button-label">NeoTiler for Mac</span>
@@ -164,6 +165,7 @@ app.initializers.add('neotiler/flarum-drawer-tags', () => {
         <a
           href="https://getneotiler.com/blog/"
           className="Button hasIcon neo-sidebar-link"
+          onclick={(e) => e.currentTarget.blur()}
         >
           <i aria-hidden="true" className="icon fas fa-newspaper Button-icon" />
           <span className="Button-label">Blog</span>
