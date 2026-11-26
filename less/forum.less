@@ -3,12 +3,16 @@
    =================================== */
 
 /* ALWAYS hide drawer-only items */
-li.drawer-only-li {
+li.drawer-only-li,
+li.item-drawerNeoTilerMac,
+li.item-drawerNeoTilerBlog {
   display: none !important;
 }
 
 /* ONLY show when drawer is open (mobile hamburger) */
-.App.drawerOpen li.drawer-only-li {
+.App.drawerOpen li.drawer-only-li,
+.App.drawerOpen li.item-drawerNeoTilerMac,
+.App.drawerOpen li.item-drawerNeoTilerBlog {
   display: block !important;
 }
 
@@ -435,4 +439,47 @@ li.drawer-only-li {
 .PostStream-item[data-type="discussionStickied"],
 .PostStream-item[data-type="discussionTagged"] {
   display: none !important;
+}
+
+/* ===================================
+   SSR Minimal Ecosystem Footer (Zero CLS)
+   =================================== */
+.NeoSiteFooter {
+  margin-top: 32px;
+  padding: 18px 0 24px;
+  border-top: 1px solid var(--control-bg);
+  font-size: 12.5px;
+  color: var(--muted-color);
+}
+
+.NeoSiteFooter-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.NeoSiteFooter-brand {
+  font-weight: 600;
+  color: var(--muted-color);
+}
+
+.NeoSiteFooter-links {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+
+  a {
+    color: var(--muted-color);
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+  }
 }

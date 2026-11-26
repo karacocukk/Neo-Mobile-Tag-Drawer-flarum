@@ -33,6 +33,37 @@ app.initializers.add('neotiler/flarum-drawer-tags', () => {
         29
       );
 
+      // "NeoTiler for Mac" & "Blog" in mobile drawer right below All Discussions
+      items.add(
+        'drawerNeoTilerMac',
+        <a
+          href="https://getneotiler.com"
+          className="Button Button--link hasIcon neo-ecosystem-link"
+        >
+          <i aria-hidden="true" className="icon fas fa-columns fa-fw Button-icon" />
+          <span className="Button-label">NeoTiler for Mac</span>
+        </a>,
+        28.6
+      );
+      if (items.items && items.items.drawerNeoTilerMac) {
+        items.items.drawerNeoTilerMac.itemClassName = 'drawer-only-li';
+      }
+
+      items.add(
+        'drawerNeoTilerBlog',
+        <a
+          href="https://getneotiler.com/blog/"
+          className="Button Button--link hasIcon neo-ecosystem-link"
+        >
+          <i aria-hidden="true" className="icon fas fa-newspaper fa-fw Button-icon" />
+          <span className="Button-label">Blog</span>
+        </a>,
+        28.3
+      );
+      if (items.items && items.items.drawerNeoTilerBlog) {
+        items.items.drawerNeoTilerBlog.itemClassName = 'drawer-only-li';
+      }
+
       // Each tag — using Flarum's native icon prop (no custom HTML)
       sortedTags.forEach((tag, index) => {
         const color = tag.color();
@@ -86,6 +117,44 @@ app.initializers.add('neotiler/flarum-drawer-tags', () => {
       );
     } catch (e) {
       console.warn('[drawer-tags] Could not render messages icon:', e);
+    }
+  });
+
+  // 1c. Desktop & Tablet Left Sidebar: "NeoTiler for Mac" and "Blog" right under "Tags"
+  extend(IndexPage.prototype, 'navItems', function (items) {
+    try {
+      if (!items || typeof items.add !== 'function') return;
+
+      let basePriority = -10;
+      if (items.items && items.items.tags && typeof items.items.tags.priority === 'number') {
+        basePriority = items.items.tags.priority;
+      }
+
+      items.add(
+        'neotilerMac',
+        <a
+          href="https://getneotiler.com"
+          className="Button hasIcon neo-sidebar-link"
+        >
+          <i aria-hidden="true" className="icon fas fa-columns Button-icon" />
+          <span className="Button-label">NeoTiler for Mac</span>
+        </a>,
+        basePriority - 0.4
+      );
+
+      items.add(
+        'neotilerBlog',
+        <a
+          href="https://getneotiler.com/blog/"
+          className="Button hasIcon neo-sidebar-link"
+        >
+          <i aria-hidden="true" className="icon fas fa-newspaper Button-icon" />
+          <span className="Button-label">Blog</span>
+        </a>,
+        basePriority - 0.8
+      );
+    } catch (e) {
+      console.warn('[drawer-tags] Could not render sidebar ecosystem links:', e);
     }
   });
 
