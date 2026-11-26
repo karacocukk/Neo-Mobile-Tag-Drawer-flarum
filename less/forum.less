@@ -430,3 +430,8 @@ li.drawer-only-li {
     font-size: 14px;
   }
 }
+
+/* Hide redundant "stickied/unstickied the discussion" event posts (pin badge is already shown in DiscussionHero) */
+.PostStream-item[data-type="discussionStickied"] {
+  display: none !important;
+}
