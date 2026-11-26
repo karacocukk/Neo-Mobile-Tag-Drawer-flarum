@@ -5,6 +5,7 @@ namespace NeoTiler\DrawerTags;
 use Flarum\Api\Controller\ShowDiscussionController;
 use Flarum\Discussion\Discussion;
 use Flarum\Http\RequestUtil;
+use Flarum\Http\UrlGenerator;
 use Illuminate\Database\ConnectionInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Tobscure\JsonApi\Document;
@@ -14,9 +15,13 @@ class LoadRelatedDiscussions
     /** @var ConnectionInterface */
     protected $db;
 
-    public function __construct(ConnectionInterface $db)
+    /** @var UrlGenerator */
+    protected $url;
+
+    public function __construct(ConnectionInterface $db, UrlGenerator $url)
     {
         $this->db = $db;
+        $this->url = $url;
     }
 
     /**
@@ -175,6 +180,7 @@ class LoadRelatedDiscussions
                 $result[] = [
                     'id' => (string) $dId,
                     'slug' => $slugPart,
+                    'url' => $this->url->to('forum')->route('discussion', ['id' => $slugPart]),
                     'title' => (string) $disc->title,
                     'commentCount' => max(0, (int) $disc->comment_count),
                     'lastPostedAt' => $lastDate ? $lastDate->toIso8601String() : null,

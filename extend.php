@@ -14,6 +14,9 @@ return [
         ->js(__DIR__.'/js/dist/forum.js')
         ->css(__DIR__.'/less/forum.less'),
 
+    (new Extend\View)
+        ->extendNamespace('flarum.forum', __DIR__.'/views'),
+
     (new Extend\ApiController(ShowDiscussionController::class))
         ->prepareDataForSerialization(LoadRelatedDiscussions::class),
 
