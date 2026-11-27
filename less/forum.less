@@ -462,11 +462,11 @@ a.neo-ecosystem-link {
 }
 
 /* ===================================
-   Native NeoTiler Spotlight Card (Post #1 Footer)
-   Premium dark-glass macOS aesthetic, real brand logo, mini CSS tiling preview, zero EasyList triggers
+   Native NeoTiler Spotlight Cards (V1 Cyan Window, V2 Neon Purple Window, V5 Cinema Edge-Bleed)
+   Real website videos (lazy-loaded on viewport entry), real brand logo, zero EasyList triggers
    =================================== */
 .NeoSpotlight {
-  margin: 6px 0 0;
+  margin: 8px 0 0;
   padding: 0 0 22px;
 }
 
@@ -475,94 +475,183 @@ a.neo-ecosystem-link {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 22px;
+  gap: 18px;
   padding: 18px 20px;
   border-radius: 14px;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 92% 18%, rgba(66, 130, 240, 0.28) 0%, rgba(66, 130, 240, 0) 52%),
-    radial-gradient(circle at 8% 90%, rgba(37, 99, 235, 0.18) 0%, rgba(37, 99, 235, 0) 48%),
-    linear-gradient(135deg, #0b1120 0%, #111827 55%, #0f172a 100%);
-  border: 1px solid rgba(96, 165, 250, 0.26);
-  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   text-decoration: none !important;
   color: #f8fafc;
-  transition: border-color 0.18s ease, transform 0.16s ease, box-shadow 0.18s ease;
+  transition: border-color 0.2s ease, transform 0.18s ease, box-shadow 0.2s ease;
 
   &:hover {
-    border-color: rgba(96, 165, 250, 0.62);
     transform: translateY(-2px);
-    box-shadow: 0 14px 34px rgba(37, 99, 235, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.14);
     text-decoration: none !important;
     color: #ffffff;
 
-    .NeoSpotlight-cta {
-      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-      box-shadow: 0 6px 18px rgba(59, 130, 246, 0.45);
+    .NeoSpotlight-macFrame {
+      transform: scale(1.022);
     }
 
-    .NeoSpotlight-pane.is-accent {
-      background: rgba(66, 130, 240, 0.36);
-      border-color: rgba(147, 197, 253, 0.85);
-      box-shadow: 0 0 14px rgba(66, 130, 240, 0.45);
+    .NeoSpotlight-bleedWrap .NeoSpotlight-video {
+      transform: scale(1.07);
     }
   }
 
   &:focus:not(:focus-visible) {
     outline: none;
   }
+
+  /* V1 — Cyan Terminal Dark-Glass Window Style */
+  &.is-style-v1 {
+    background:
+      radial-gradient(circle at 86% 18%, rgba(56, 189, 248, 0.25), transparent 52%),
+      radial-gradient(circle at 12% 90%, rgba(99, 102, 241, 0.22), transparent 48%),
+      linear-gradient(135deg, #060a12 0%, #0f172a 58%, #0a1122 100%);
+    border: 1px solid rgba(56, 189, 248, 0.32);
+    box-shadow: 0 12px 30px rgba(2, 6, 23, 0.26);
+
+    &:hover {
+      border-color: rgba(56, 189, 248, 0.72);
+      box-shadow: 0 16px 38px rgba(14, 165, 233, 0.24);
+
+      .NeoSpotlight-macFrame {
+        border-color: rgba(56, 189, 248, 0.65);
+        box-shadow: 0 16px 34px rgba(14, 165, 233, 0.28);
+      }
+    }
+  }
+
+  /* V2 — Neon Purple-Blue Split-Screen Glow Style */
+  &.is-style-v2 {
+    background:
+      radial-gradient(circle at 82% 20%, rgba(168, 85, 247, 0.36), transparent 52%),
+      radial-gradient(circle at 18% 85%, rgba(59, 130, 246, 0.28), transparent 48%),
+      linear-gradient(135deg, #0d0a1c 0%, #171236 55%, #0d1629 100%);
+    border: 1px solid rgba(168, 85, 247, 0.42);
+    box-shadow: 0 12px 30px rgba(88, 28, 135, 0.24);
+
+    .NeoSpotlight-badge:not(.is-deal) {
+      background: rgba(168, 85, 247, 0.24);
+      border-color: rgba(192, 132, 252, 0.5);
+      color: #f3e8ff;
+    }
+
+    .NeoSpotlight-cta {
+      background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.42);
+    }
+
+    .NeoSpotlight-macFrame {
+      border-color: rgba(192, 132, 252, 0.4);
+    }
+
+    .NeoSpotlight-macTitlebar {
+      background: linear-gradient(180deg, #2e1065 0%, #171236 100%);
+    }
+
+    .NeoSpotlight-macCaption {
+      color: #ddd6fe;
+    }
+
+    .NeoSpotlight-macLive {
+      color: #c084fc;
+
+      &::before {
+        background: #c084fc;
+        box-shadow: 0 0 6px #c084fc;
+      }
+    }
+
+    &:hover {
+      border-color: rgba(192, 132, 252, 0.85);
+      box-shadow: 0 16px 38px rgba(139, 92, 246, 0.34);
+
+      .NeoSpotlight-macFrame {
+        border-color: rgba(192, 132, 252, 0.78);
+        box-shadow: 0 16px 36px rgba(168, 85, 247, 0.35);
+      }
+    }
+  }
+
+  /* V5 — Cinema Edge-Bleed Video Hero Style */
+  &.is-style-v5 {
+    padding: 0;
+    min-height: 162px;
+    background: #070b14;
+    border: 1px solid rgba(56, 189, 248, 0.32);
+    box-shadow: 0 14px 34px rgba(2, 6, 23, 0.3);
+
+    .NeoSpotlight-content {
+      position: relative;
+      z-index: 3;
+      width: 58%;
+      flex: 0 0 58%;
+      padding: 20px 14px 20px 22px;
+    }
+
+    &:hover {
+      border-color: rgba(56, 189, 248, 0.75);
+      box-shadow: 0 16px 38px rgba(14, 165, 233, 0.25);
+    }
+  }
 }
 
 .NeoSpotlight-disclosure {
   position: absolute;
-  top: 10px;
-  right: 12px;
+  top: 9px;
+  right: 11px;
   padding: 1px 6px;
   border-radius: 4px;
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: rgba(203, 213, 225, 0.72);
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(226, 232, 240, 0.85);
+  background: rgba(15, 23, 42, 0.68);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   line-height: 1.5;
+  z-index: 4;
+  pointer-events: none;
 }
 
 .NeoSpotlight-content {
   min-width: 0;
   flex: 1;
+  position: relative;
+  z-index: 2;
 }
 
 .NeoSpotlight-brandRow {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 9px;
+  gap: 8px;
   margin-bottom: 8px;
 }
 
 .NeoSpotlight-logoFrame {
-  width: 28px;
-  height: 28px;
-  border-radius: 7px;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   padding: 3px;
   box-sizing: border-box;
 
   img {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     display: block;
     object-fit: contain;
   }
 }
 
 .NeoSpotlight-brandName {
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 700;
   letter-spacing: -0.01em;
   color: #ffffff;
@@ -576,24 +665,24 @@ a.neo-ecosystem-link {
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.05em;
-  background: rgba(66, 130, 240, 0.22);
-  border: 1px solid rgba(96, 165, 250, 0.35);
-  color: #93c5fd;
+  background: rgba(56, 189, 248, 0.16);
+  border: 1px solid rgba(56, 189, 248, 0.38);
+  color: #7dd3fc;
 
   &.is-deal {
     background: rgba(251, 191, 36, 0.16);
-    border-color: rgba(251, 191, 36, 0.42);
+    border-color: rgba(251, 191, 36, 0.44);
     color: #fcd34d;
   }
 }
 
 .NeoSpotlight-title {
   font-size: 16.5px;
-  font-weight: 700;
-  line-height: 1.3;
+  font-weight: 800;
+  line-height: 1.28;
   letter-spacing: -0.015em;
   color: #ffffff;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
 }
 
 .NeoSpotlight-desc {
@@ -607,23 +696,23 @@ a.neo-ecosystem-link {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 12px;
 }
 
 .NeoSpotlight-cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 7px;
   padding: 9px 16px;
   border-radius: 8px;
-  background: linear-gradient(135deg, #4282f0 0%, #2563eb 100%);
+  background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
   color: #ffffff;
   font-size: 13px;
   font-weight: 700;
   white-space: nowrap;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.36);
-  transition: background 0.16s ease, box-shadow 0.16s ease;
+  box-shadow: 0 4px 14px rgba(14, 165, 233, 0.38);
+  transition: transform 0.15s ease, box-shadow 0.16s ease;
 
   .icon {
     font-size: 11px;
@@ -632,51 +721,47 @@ a.neo-ecosystem-link {
 
 .NeoSpotlight-pricingMeta {
   display: flex;
-  flex-direction: column;
-  gap: 1px;
+  align-items: center;
 }
 
 .NeoSpotlight-priceLine {
-  font-size: 12.5px;
-  color: #f8fafc;
+  font-size: 12px;
+  color: #94a3b8;
 
   strong {
     font-weight: 700;
-    color: #ffffff;
+    color: #f8fafc;
+    font-size: 12.5px;
   }
 }
 
 .NeoSpotlight-oldPrice {
   color: #94a3b8;
-  margin-right: 4px;
+  margin-right: 3px;
 }
 
-.NeoSpotlight-trustLine {
-  font-size: 11.5px;
-  color: #94a3b8;
-}
-
-/* Miniature macOS Window Tiling Preview (Desktop/Tablet) */
-.NeoSpotlight-visual {
+/* Real macOS Window Frame for V1 & V2 */
+.NeoSpotlight-macFrame {
+  width: 244px;
   flex-shrink: 0;
-  width: 176px;
-  padding-top: 10px;
-}
-
-.NeoSpotlight-screen {
-  background: rgba(15, 23, 42, 0.85);
-  border: 1px solid rgba(148, 163, 184, 0.24);
   border-radius: 10px;
-  padding: 7px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  background: #050811;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.48), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+  z-index: 2;
 }
 
-.NeoSpotlight-menubar {
+.NeoSpotlight-macTitlebar {
+  height: 20px;
+  padding: 0 8px;
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 6px;
-  padding: 0 2px;
 }
 
 .NeoSpotlight-dots {
@@ -695,128 +780,129 @@ a.neo-ecosystem-link {
   }
 }
 
-.NeoSpotlight-menuTitle {
+.NeoSpotlight-macCaption {
   font-size: 9px;
   font-weight: 600;
-  color: rgba(203, 213, 225, 0.65);
+  color: #94a3b8;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   letter-spacing: 0.02em;
 }
 
-.NeoSpotlight-grid {
-  display: flex;
-  gap: 5px;
-  height: 70px;
-}
-
-.NeoSpotlight-rightCol {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.NeoSpotlight-pane {
-  border-radius: 5px;
-  padding: 6px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-
-  &.is-primary {
-    flex: 1.15;
-  }
-
-  &.is-accent {
-    flex: 1;
-    align-items: center;
-    justify-content: center;
-    background: rgba(66, 130, 240, 0.24);
-    border-color: rgba(96, 165, 250, 0.58);
-  }
-
-  &.is-secondary {
-    flex: 1;
-  }
-}
-
-.NeoSpotlight-snapTag {
-  font-size: 9.5px;
-  font-weight: 700;
-  color: #dbeafe;
-  letter-spacing: 0.03em;
-}
-
-.NeoSpotlight-bar {
-  display: block;
-  height: 4px;
-  border-radius: 2px;
-  background: rgba(203, 213, 225, 0.22);
-
-  &.is-lg { width: 82%; background: rgba(203, 213, 225, 0.34); }
-  &.is-md { width: 65%; }
-  &.is-sm { width: 42%; }
-}
-
-.NeoSpotlight-dock {
-  margin: 6px auto 0;
-  width: 68px;
-  padding: 3px 6px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  display: flex;
+.NeoSpotlight-macLive {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 5px;
+  gap: 3px;
+  font-size: 8.5px;
+  font-weight: 700;
+  color: #38bdf8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 
-  i {
-    width: 7px;
-    height: 7px;
-    border-radius: 2px;
-    background: rgba(203, 213, 225, 0.35);
-    display: block;
-
-    &.is-active {
-      background: #4282f0;
-      box-shadow: 0 0 6px rgba(66, 130, 240, 0.85);
-    }
+  &::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #38bdf8;
+    box-shadow: 0 0 6px #38bdf8;
   }
 }
 
-/* Dark mode subtle extra rim glow */
-.nightmode, [data-theme="dark"], body.dark {
-  .NeoSpotlight-card {
-    border-color: rgba(96, 165, 250, 0.34);
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+.NeoSpotlight-videoStage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  background: #020617;
+  overflow: hidden;
+}
+
+.NeoSpotlight-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Cinema Edge-Bleed Video Container for V5 */
+.NeoSpotlight-bleedWrap {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 52%;
+  z-index: 1;
+  overflow: hidden;
+  background: #020617;
+
+  .NeoSpotlight-video {
+    transform: scale(1.03);
+    transition: transform 0.4s ease;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      #070b14 0%,
+      rgba(7, 11, 20, 0.84) 24%,
+      rgba(7, 11, 20, 0.16) 65%,
+      rgba(7, 11, 20, 0.04) 100%
+    );
+    pointer-events: none;
   }
 }
 
 @media (max-width: 700px) {
-  .NeoSpotlight-visual {
-    display: none;
-  }
-
   .NeoSpotlight-card {
-    padding: 15px 15px 16px;
-    gap: 12px;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 15px;
+    gap: 14px;
+
+    &.is-style-v5 {
+      padding: 0;
+
+      .NeoSpotlight-content {
+        width: 100%;
+        flex: 1 1 auto;
+        padding: 16px 15px 14px;
+      }
+    }
   }
 
   .NeoSpotlight-title {
-    font-size: 15px;
-    padding-right: 26px;
+    font-size: 15.5px;
+    padding-right: 28px;
+  }
+
+  .NeoSpotlight-macFrame {
+    width: 100%;
+  }
+
+  .NeoSpotlight-bleedWrap {
+    position: relative;
+    width: 100%;
+    height: 168px;
+
+    &::after {
+      background: linear-gradient(0deg, #070b14 0%, rgba(7, 11, 20, 0.22) 48%, transparent 100%);
+    }
   }
 
   .NeoSpotlight-footerRow {
     flex-direction: column;
     align-items: stretch;
-    gap: 10px;
+    gap: 8px;
   }
 
   .NeoSpotlight-cta {
     width: 100%;
     padding: 10px 14px;
+  }
+
+  .NeoSpotlight-pricingMeta {
+    justify-content: center;
   }
 }

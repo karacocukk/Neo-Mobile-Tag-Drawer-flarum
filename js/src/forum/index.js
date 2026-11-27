@@ -230,9 +230,10 @@ app.initializers.add('neotiler/flarum-drawer-tags', () => {
     }
   });
 
-  // 3b. Native NeoTiler Spotlight Card right below Post #1 (OP)
-  // Appended inside Post #1's .PostStream-item wrapper so PostStream item count,
-  // PostStreamScrubber indices, and scroll math stay 100% untouched.
+  // 3b. Native NeoTiler Spotlight Cards inside PostStream
+  // Shown right after Post #1 (p1) and every 4th post thereafter (p4, p8 — up to 3 cards per page),
+  // provided there is at least 1 more comment after that post so it never collides with RelatedDiscussions.
+  // Appended inside the post's .PostStream-item wrapper so PostStreamScrubber indices & scroll math stay 100% untouched.
   extend(PostStream.prototype, 'view', function (vdom) {
     try {
       const discussion = this.attrs && this.attrs.discussion;
@@ -242,23 +243,34 @@ app.initializers.add('neotiler/flarum-drawer-tags', () => {
       }
       if (!vdom || !Array.isArray(vdom.children) || vdom.children.length === 0) return;
 
+      // Determine the highest comment post number currently known
+      let maxPostNum = (typeof discussion.lastPostNumber === 'function' && Number(discussion.lastPostNumber())) || 0;
+      for (let i = 0; i < vdom.children.length; i++) {
+        const c = vdom.children[i];
+        const n = c && c.attrs ? Number(c.attrs['data-number']) : 0;
+        if (n > maxPostNum) maxPostNum = n;
+      }
+
+      let mountedCount = 0;
       for (let i = 0; i < vdom.children.length; i++) {
         const child = vdom.children[i];
-        if (
-          child &&
-          child.attrs &&
-          Number(child.attrs['data-number']) === 1 &&
-          child.attrs['data-type'] === 'comment'
-        ) {
-          if (Array.isArray(child.children)) {
-            const alreadyMounted = child.children.some(
-              (c) => c && c.tag === SpotlightCard
-            );
-            if (!alreadyMounted) {
-              child.children.push(<SpotlightCard discussion={discussion} />);
-            }
+        if (!child || !child.attrs || child.attrs['data-type'] !== 'comment') continue;
+
+        const postNum = Number(child.attrs['data-number']);
+        if (!postNum || postNum < 1) continue;
+
+        const isFirstPost = postNum === 1;
+        const isIntervalPost = postNum >= 4 && postNum % 4 === 0 && postNum < maxPostNum;
+
+        if (!isFirstPost && !isIntervalPost) continue;
+        if (mountedCount >= 3) break;
+
+        if (Array.isArray(child.children)) {
+          const alreadyMounted = child.children.some((c) => c && c.tag === SpotlightCard);
+          if (!alreadyMounted) {
+            child.children.push(<SpotlightCard discussion={discussion} postNumber={postNum} />);
           }
-          break;
+          mountedCount++;
         }
       }
     } catch (e) {
