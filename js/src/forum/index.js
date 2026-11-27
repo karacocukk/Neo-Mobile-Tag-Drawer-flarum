@@ -3,9 +3,11 @@ import { extend } from 'flarum/common/extend';
 import HeaderSecondary from 'flarum/forum/components/HeaderSecondary';
 import IndexPage from 'flarum/forum/components/IndexPage';
 import DiscussionPage from 'flarum/forum/components/DiscussionPage';
+import PostStream from 'flarum/forum/components/PostStream';
 import LinkButton from 'flarum/common/components/LinkButton';
 import Separator from 'flarum/common/components/Separator';
 import RelatedDiscussions from './components/RelatedDiscussions';
+import SpotlightCard from './components/SpotlightCard';
 
 app.initializers.add('neotiler/flarum-drawer-tags', () => {
   // 1. Mobile Drawer Tags
@@ -225,6 +227,42 @@ app.initializers.add('neotiler/flarum-drawer-tags', () => {
       );
     } catch (e) {
       console.warn('[drawer-tags] Could not render related discussions:', e);
+    }
+  });
+
+  // 3b. Native NeoTiler Spotlight Card right below Post #1 (OP)
+  // Appended inside Post #1's .PostStream-item wrapper so PostStream item count,
+  // PostStreamScrubber indices, and scroll math stay 100% untouched.
+  extend(PostStream.prototype, 'view', function (vdom) {
+    try {
+      const discussion = this.attrs && this.attrs.discussion;
+      if (!discussion) return;
+      if (typeof discussion.isPrivateDiscussion === 'function' && discussion.isPrivateDiscussion()) {
+        return;
+      }
+      if (!vdom || !Array.isArray(vdom.children) || vdom.children.length === 0) return;
+
+      for (let i = 0; i < vdom.children.length; i++) {
+        const child = vdom.children[i];
+        if (
+          child &&
+          child.attrs &&
+          Number(child.attrs['data-number']) === 1 &&
+          child.attrs['data-type'] === 'comment'
+        ) {
+          if (Array.isArray(child.children)) {
+            const alreadyMounted = child.children.some(
+              (c) => c && c.tag === SpotlightCard
+            );
+            if (!alreadyMounted) {
+              child.children.push(<SpotlightCard discussion={discussion} />);
+            }
+          }
+          break;
+        }
+      }
+    } catch (e) {
+      console.warn('[drawer-tags] Could not render spotlight card:', e);
     }
   });
 
