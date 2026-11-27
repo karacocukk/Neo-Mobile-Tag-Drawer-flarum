@@ -28,7 +28,6 @@ function detectDeviceOs() {
       '';
     const combined = `${platform} ${ua}`;
 
-    // iPadOS desktop-class UA reports Macintosh with touch points
     if (/iPhone|iPad|iPod/i.test(combined) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1)) {
       return 'ios';
     }
@@ -66,7 +65,7 @@ function resolveCopyVariant(discussion) {
       }
     }
   } catch (e) {
-    // Fallback to mac copy
+    // Fallback safely
   }
   return 'mac';
 }
@@ -83,11 +82,11 @@ export default class SpotlightCard extends Component {
 
     const isDevCopy = variant === 'dev';
     const headline = isDevCopy
-      ? 'Coding with AI, IDE & Terminal on Mac?'
-      : 'The missing native window manager for macOS.';
+      ? 'Snap your AI IDE, Browser & Terminal on Mac.'
+      : 'The Missing Native Window Manager for macOS.';
     const description = isDevCopy
-      ? 'Snap your editor, browser & terminal into custom zones in 1 shortcut. Built in native Swift.'
-      : 'Custom snap zones, instant shortcuts & live Dock previews in native Swift. Zero bloat.';
+      ? 'Custom snap zones, instant shortcuts & live Dock previews in native Swift. Zero bloat.'
+      : 'Custom snap zones, keyboard shortcuts & live Dock previews built in native Swift.';
 
     return (
       <aside className="NeoSpotlight" aria-label="NeoTiler for macOS">
@@ -98,44 +97,87 @@ export default class SpotlightCard extends Component {
           rel="noopener"
           onclick={(e) => e.currentTarget.blur()}
         >
-          <div className="NeoSpotlight-mark" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-              <rect x="2.5" y="2.5" width="8.5" height="8.5" rx="2.2" />
-              <rect x="13" y="2.5" width="8.5" height="8.5" rx="2.2" />
-              <rect x="2.5" y="13" width="8.5" height="8.5" rx="2.2" />
-              <rect x="13" y="13" width="8.5" height="8.5" rx="2.2" />
-            </svg>
-          </div>
+          <span className="NeoSpotlight-disclosure" title="Sponsored by NeoTiler">
+            Ad
+          </span>
 
-          <div className="NeoSpotlight-body">
-            <div className="NeoSpotlight-topRow">
-              <span className={`NeoSpotlight-badge ${isBlackFriday ? 'is-deal' : ''}`}>
-                {isBlackFriday ? 'BLACK FRIDAY · 30% OFF' : 'NEOTILER FOR MAC'}
+          <div className="NeoSpotlight-content">
+            <div className="NeoSpotlight-brandRow">
+              <span className="NeoSpotlight-logoFrame">
+                <img
+                  src="https://getneotiler.com/neotiler-logo.png"
+                  alt="NeoTiler"
+                  width="24"
+                  height="24"
+                  loading="eager"
+                />
               </span>
-              <span className="NeoSpotlight-price">
-                {isBlackFriday ? (
-                  <span>
-                    <del className="NeoSpotlight-oldPrice">$9.99</del>{' '}
-                    <strong>$6.99 Lifetime</strong>
-                  </span>
-                ) : (
-                  <strong>$9.99 Lifetime</strong>
-                )}
+              <span className="NeoSpotlight-brandName">NeoTiler</span>
+              <span className={`NeoSpotlight-badge ${isBlackFriday ? 'is-deal' : ''}`}>
+                {isBlackFriday ? 'BLACK FRIDAY · 30% OFF' : 'FOR MACOS'}
               </span>
             </div>
 
             <div className="NeoSpotlight-title">{headline}</div>
             <div className="NeoSpotlight-desc">{description}</div>
-            <div className="NeoSpotlight-trust">
-              14-day free trial · No credit card · Pay once, own forever
+
+            <div className="NeoSpotlight-footerRow">
+              <span className="NeoSpotlight-cta">
+                <span>{isBlackFriday ? 'Claim $6.99 Lifetime' : 'Download Free Trial'}</span>
+                {icon('fas fa-arrow-right')}
+              </span>
+
+              <div className="NeoSpotlight-pricingMeta">
+                <div className="NeoSpotlight-priceLine">
+                  {isBlackFriday ? (
+                    <span>
+                      <del className="NeoSpotlight-oldPrice">$9.99</del>{' '}
+                      <strong>$6.99 one-time</strong>
+                    </span>
+                  ) : (
+                    <strong>$9.99 one-time</strong>
+                  )}
+                </div>
+                <div className="NeoSpotlight-trustLine">
+                  14-day free trial · No subscription
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="NeoSpotlight-ctaWrap">
-            <span className="NeoSpotlight-cta">
-              <span>{isBlackFriday ? 'Claim $6.99' : 'Try Free'}</span>
-              {icon('fas fa-arrow-right')}
-            </span>
+          <div className="NeoSpotlight-visual" aria-hidden="true">
+            <div className="NeoSpotlight-screen">
+              <div className="NeoSpotlight-menubar">
+                <span className="NeoSpotlight-dots">
+                  <i className="is-r" />
+                  <i className="is-y" />
+                  <i className="is-g" />
+                </span>
+                <span className="NeoSpotlight-menuTitle">NeoTiler</span>
+              </div>
+              <div className="NeoSpotlight-grid">
+                <div className="NeoSpotlight-pane is-primary">
+                  <span className="NeoSpotlight-bar is-lg" />
+                  <span className="NeoSpotlight-bar is-md" />
+                  <span className="NeoSpotlight-bar is-sm" />
+                </div>
+                <div className="NeoSpotlight-rightCol">
+                  <div className="NeoSpotlight-pane is-accent">
+                    <span className="NeoSpotlight-snapTag">⌘⌥→</span>
+                  </div>
+                  <div className="NeoSpotlight-pane is-secondary">
+                    <span className="NeoSpotlight-bar is-md" />
+                    <span className="NeoSpotlight-bar is-sm" />
+                  </div>
+                </div>
+              </div>
+              <div className="NeoSpotlight-dock">
+                <i />
+                <i className="is-active" />
+                <i />
+                <i />
+              </div>
+            </div>
           </div>
         </a>
       </aside>
